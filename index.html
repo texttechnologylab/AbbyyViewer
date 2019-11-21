@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visualizer</title>
+<link rel="stylesheet" href="lib/tabby-ui.min.css">
+<link rel="stylesheet" href="src/style.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+
+  <script src="lib/tiff.js"></script>
+  <script src="lib/tabby.polyfills.min.js"></script>
+  <script src="lib/run_prettify.js"></script>
+  <script src="dist/index_bundle.js"></script>
+
+<h1>Simple Abby Filereader Visualizer</h1>
+
+
+<div id="imageSide">
+
+  <div id="file-input-wrapper">
+    <input id="file-input" type="file" name="name" />
+  </div>
+    
+  <div id="openImageDiv"> open Image </div>
+  <div id="canvasHolder"></div>
+
+
+  <!-- <input id="file-input" type="text" name="pathName"  /> -->
+  <!-- <input onclick="loadImage(event)" type="button" value="import"> -->
+
+</div>
+
+<div id="xmlSide">
+
+
+  <div id="xmlNavigationBar">
+    <input id="file-input-xml" type="file" name="name" />
+
+    <div>
+      <ul data-tabs>
+        <li><a data-tabby-default href="#xmlContent">xml</a></li>
+        <li><a href="#textContent">text</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <pre id="xmlContent" class="prettyprint lang-xml"></pre>
+  <div id="textContent" ></div>
+
+</div>
+
+<div style="position: absolute; top: 5px; right: 12px;">
+  <span style="color:teal">text</span>&nbsp; 
+  <span style="color:crimson">image</span>&nbsp; 
+  <span style="color:royalblue">table</span>&nbsp; 
+  <span style="color:peru">other</span>&nbsp; 
+</div>
+
+
+
+<pre id="characterBlockPreview" class="prettyprint lang-xml"></pre>
+
+
+</body>
+</html> 
