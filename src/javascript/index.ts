@@ -12,24 +12,27 @@ function getPathFromEvent(e: Event): string{
 // event Listener
 document.addEventListener('readystatechange', event => {
 
-  //@ts-ignore
+//@ts-ignore
   if (event.target.readyState === "interactive") {   //same as:  ..addEventListener("DOMContentLoaded".. and   jQuery.ready
     Elements.getOpenImageDiv().addEventListener("click", () => {
       Elements.getImageInput().click()
     })
-    
+
     Elements.getImageInput().addEventListener("change", (event) => {
       const path = getPathFromEvent(event)
       const fakePath = Elements.getImageInput().value
-      if(path.length < 4 || fakePath.slice(fakePath.length-3) != "tif"){
-        alert("input is invalid")
-        Elements.getImageInput().value = ""
+      if([".tif", "tiff"].includes(fakePath.slice(fakePath.length-4))){
+        Elements.getOpenImageDiv().style.display = "none";
+        loadTiff(path)
+      } else if ([".png", ".jpg", "jpeg"].includes(fakePath.slice(fakePath.length-4))) {
+        loadImage(path);
+      } else {
+        alert("input is invalid");
+        Elements.getImageInput().value = "";
         return
       }
-      Elements.getOpenImageDiv().style.display = "none"
-      loadImage(path)
-    })
-    
+    });
+
     Elements.getXmlInput().addEventListener("change", (event) => {
       const path = getPathFromEvent(event)
       const fakePath = Elements.getXmlInput().value
@@ -90,8 +93,7 @@ function getImage(path: string, block: (image:any)=>void){
   xhr.send();
 }
 
-function loadImage(path: string){
-  
+function loadTiff(path: string){
   // delete previous created boxes and xml output
   clearFields()
 
@@ -114,6 +116,35 @@ function loadImage(path: string){
     Elements.getCanvasHolder().append(canvas);
   })
   
+}
+
+function loadImage(path: string) {
+  clearFields();
+  Elements.getOpenImageDiv().style.display = "none";
+
+  // delete previous created canvas
+  var css = document.getElementsByClassName("imageCanvas");
+  //@ts-ignore
+  if (css.length > 0) css[0].parentElement.removeChild(css[0]);
+
+  // create new canvas (image)
+  let canvas = document.createElement('canvas');
+  let context = canvas.getContext('2d');
+  let img = document.createElement("img");
+  img.src = path;
+  img.onload = function () {
+    canvas.height = img.height;
+    canvas.width = img.width;
+    //@ts-ignore
+    context.drawImage(img, 0, 0, img.width, img.height);
+    //@ts-ignore
+    window.URL.revokeObjectURL(this.src);
+  };
+
+  canvas.classList.add("imageCanvas");
+  canvas.style.zIndex = "6";
+  // @ts-ignore
+  Elements.getCanvasHolder().append(canvas);
 }
 
 
@@ -200,7 +231,7 @@ function makeRect(rectObj: RectangleOptions, realWidth: number, realHeight: numb
 
     Elements.getXmlContent().innerHTML = readyString
 
-    
+
     new Promise((resolve, reject) => {
       //@ts-ignore
       Elements.getXmlContent().innerHTML = PR.prettyPrintOne(readyString)
@@ -254,11 +285,11 @@ function loadXml(path: string){
 
 	// delete previous created boxes and xml output
 	clearFields()
-	
+
 	var page = xml.getElementsByTagName("page")[0]
 	var realWidth = Number(page.getAttribute("width"))
 	var realHeight = Number(page.getAttribute("height"))
-	
+
 	// create boxes
 	var tags = xml.getElementsByTagName("block")
 	for(var i=0; i < tags.length; i++){
@@ -284,6 +315,6 @@ function calcScaleFactor(realWidth: number, realHeight: number): number|null{
 
   //console.log("image height: " + height)
   //console.log("natural height: " + realHeight)
-  
+
   return width / realWidth
 }
