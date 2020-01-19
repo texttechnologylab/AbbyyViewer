@@ -33,6 +33,10 @@ export class Elements {
         return document.getElementById("textContent") as HTMLElement
     }
 
+    static getGoldContent(): HTMLTextAreaElement{
+        return document.getElementById("goldContent") as HTMLTextAreaElement
+    }
+
 
 
     static getCharacterBlockPreview(): HTMLElement{

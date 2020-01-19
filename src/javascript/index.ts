@@ -226,6 +226,7 @@ function makeRect(rectObj: RectangleOptions, realWidth: number, realHeight: numb
 
   // set onClick Listener
   rect.onclick = () => {
+    //alert("okr")
     const xmlString = (new XMLSerializer()).serializeToString(rectObj.xml);
     const readyString = formatXML(xmlString).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/ /g, '&nbsp;').replace(/\n/g,'<br />')
 
@@ -238,8 +239,29 @@ function makeRect(rectObj: RectangleOptions, realWidth: number, realHeight: numb
     })
 
 
+
     Elements.getTextContent().innerHTML = getTextFromTextBlock(rectObj.xml)
   }
+
+  rect.oncontextmenu = () => {
+      const fakePath = Elements.getImageInput().value
+      const regex = /.*\\(.*)\.tif/
+      //@ts-ignore
+      const path = fakePath.match(regex)[1]
+      if(path == null) {
+	      alert("pfad konnte nicht gelesen werden")
+	      return false
+      } 
+      const goldLine = path + ";" + rectObj.top + ";" + rectObj.left
+      const inStandard = blockReplaceInGoldStandard(path, rectObj.top, rectObj.left)
+      //alert(inStandard)
+      //const value = inStandard ? 0 : 1;
+      if(!inStandard) addLineToGoldStandard(path, rectObj.top, rectObj.left, 1)
+      return false
+  }
+
+
+
   //@ts-ignore
   Elements.getCanvasHolder().appendChild(rect)
   //rect.onClick = function(rectObj.content)
@@ -317,4 +339,28 @@ function calcScaleFactor(realWidth: number, realHeight: number): number|null{
   //console.log("natural height: " + realHeight)
 
   return width / realWidth
+}
+
+function addLineToGoldStandard(pageNumber: string, top: number, left: number, value: number){
+	const line = pageNumber + ";" + left + ";" + top + ";" + value + "\n"
+	Elements.getGoldContent().value += line
+}
+
+function blockReplaceInGoldStandard(pageNumber: string, top: number, left: number){
+	const lines = Elements.getGoldContent().value.split("\n")
+	for(let i=0; i<lines.length; i++){
+		const regex = "^"+ pageNumber +";"+ left +";"+ top +";(.*)$"
+		let line = lines[i]
+		if(line == "") continue
+		const match = line.match(regex)
+		if(match == null) continue
+		// found matching line
+		const value = match[1]
+		const newValue = value == "1" ? 0 : 1
+		line = line.substring(0, line.length - 1) + newValue
+		lines[i] = line
+		Elements.getGoldContent().value = lines.join("\n")
+		return true
+	}
+	return false;
 }
