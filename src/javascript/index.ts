@@ -245,7 +245,7 @@ function makeRect(rectObj: RectangleOptions, realWidth: number, realHeight: numb
 
   rect.oncontextmenu = () => {
       const fakePath = Elements.getImageInput().value
-      const regex = /.*\\(.*)\.tif/
+      const regex = /.*\\(.*)\.(tif|tiff|png|jpg|jpeg")/
       //@ts-ignore
       const path = fakePath.match(regex)[1]
       if(path == null) {
