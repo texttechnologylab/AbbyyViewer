@@ -1,5 +1,5 @@
 # AbbyyViewer
-Einfache Web-App um den XML Output des AbbyyFineReaders zu visualisieren.
+Einfache Web-App um den XML Output des AbbyyFineReaders zu visualisieren. \
 https://texttechnologylab.github.io/AbbyyViewer/index.html
 
 ## Funktionen
