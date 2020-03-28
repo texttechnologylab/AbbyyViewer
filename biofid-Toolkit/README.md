@@ -14,9 +14,11 @@ How to use:
 
 You need the Python version 3.x.
 
-1\. To start the program type "python3 BIOfid-Toolkit.py"\
+1\. install the following dependencies: numpy, sklearn, opencv,\ 
+	gensim \
+2\. To start the program type "python3 BIOfid-Toolkit.py"\
    in the console.\
-2\. Now you can select one of the provided tools.
+3\. Now you can select one of the provided tools.
 
 ################################################################
 
