@@ -17,8 +17,8 @@ Sie auf den Button "Browse" in der oberen linken Ecke der rechten Bildschirmhäl
 \
 Nun sollten die vom AbbyyReader erkannten Blöcke auf der linken Bildschirmhälfte eingezeichnet \
 worden sein. Die Bedeutung der Farbe der Umrandung der Blöcke kann der Legende oben rechts \
-entnommen werden. Sie können jetzt auf einen dieser Blöcke klicken, um dessen XML Beschreibung auf \
-der rechten Bildschirmhälfte anzuzeigen. Um den erkannten Text anzuzeigen, wechseln Sie auf \
+entnommen werden. Sie können jetzt auf einen dieser Blöcke klicken, um dessen XML Beschreibung \
+auf der rechten Bildschirmhälfte anzuzeigen. Um den erkannten Text anzuzeigen, wechseln Sie auf \
 der rechten Bildschirmhäflte zu dem Reiter "text". Genauere Informationen zur Erkennung eines \
 Buchstaben werden angezeigt, wenn Sie den Mauszeiger über einen Buchstaben bewegen. \
 \
